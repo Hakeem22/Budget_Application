@@ -1,4 +1,29 @@
 <?php
+include("./includes/dbconfig.php");
+session_start();
+
+$error = "Already a user? Click here to login.";
+
+if (isset($_POST['submit'])) {
+    $username = mysqli_real_escape_string($conn, $_POST['user']);
+    $password = mysqli_real_escape_string($conn, $_POST['pass']);
+
+    $sql = "SELECT UserID FROM users.users WHERE Username = '$username' and Password = '$password'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    $active = $row['active'];
+
+    $count = mysqli_num_rows($result);
+
+    if ($count == 1) {
+        session_register("username");
+        $_SESSION['login_user'] = $username;
+        header("Location: index.php");
+    } else {
+        $error = "The credentials you have entered are invalid. Please try again.";
+    }
+
+}
 
 ?>
 
@@ -10,18 +35,19 @@
 </head>
 
 <body>
-<center>
-    <form action="index.php" method="POST">
+    <form action="" method="post">
         Username:<br>
-        <input type="text" name="username"><br>
+        <input type="text" id="user" name="user" placeholder="Enter your username" required><br>
         Password:<br>
-        <input type="password" name="password"><br>
+        <input type="password" id="pass" name="pass" placeholder="Enter your password" required><br>
         Email:<br>
-        <input type="text" name="email"><br>
-        <input type="submit" value="Submit">
+        <input type="text" name="email" placeholder="Enter your email" required><br>
+        <input type="submit" name="submit" value="Register">
     </form>
-</center>
-<div id="text"></div>
+
+    <div id="message">
+        <?php echo $error?>
+    </div>
 </body>
 
 </html>

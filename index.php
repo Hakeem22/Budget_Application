@@ -1,9 +1,5 @@
 <?php
 
-if (isset($_POST["username"])) {
-    echo "Welcome back to the site " . $_POST['username'];
-}
-
 ?>
 
 <html>
