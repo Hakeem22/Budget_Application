@@ -2,28 +2,39 @@
 include("./includes/dbconfig.php");
 session_start();
 
-$error = "Already a user? Click here to login.";
+$errors = array();
 
 if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['user']);
-    $password = mysqli_real_escape_string($conn, $_POST['pass']);
+    if (empty($_POST['user'])) {
+        $errors[] = 'Please insert a username into the input field.';
+    }
+    if (empty($_POST['pass'])) {
+        $errors[] = 'Please enter a password into the input field.';
+    }
+    if (empty($_POST['email'])) {
+        $errors[] = 'Please enter a valid email address into the input field.';
+    }
 
-    $sql = "SELECT UserID FROM users.users WHERE Username = '$username' and Password = '$password'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    $active = $row['active'];
+    if (empty($errors)) {
+        $username = mysqli_real_escape_string($conn, $_POST['user']);//create it so it checks emails as well
+        $password = mysqli_real_escape_string($conn, $_POST['pass']);
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $sql = "SELECT * FROM users.users WHERE Username = '$username'";
+        $result = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($result);
 
-    $count = mysqli_num_rows($result);
-
-    if ($count == 1) {
-        session_register("username");
-        $_SESSION['login_user'] = $username;
-        header("Location: index.php");
-    } else {
-        $error = "The credentials you have entered are invalid. Please try again.";
+        if ($count > 0) {
+            $errors[] = "The credentials you have entered have been used already. Please try with another username.";
+        } else {
+            $insert = "INSERT INTO users.users (Username, Password, EmailAddress) VALUES ('$username', '$password', '$email')";
+            mysqli_query($conn, $insert);
+            $errors[] = "The credentials have not been used previously therefore your account has been created try to login <a href='login.php'>here</a>";//register user here
+        }
     }
 
 }
+
+mysqli_close($conn);
 
 ?>
 
@@ -37,16 +48,20 @@ if (isset($_POST['submit'])) {
 <body>
     <form action="" method="post">
         Username:<br>
-        <input type="text" id="user" name="user" placeholder="Enter your username" required><br>
+        <input type="text" id="user" name="user" placeholder="Enter your username"><br>
         Password:<br>
-        <input type="password" id="pass" name="pass" placeholder="Enter your password" required><br>
+        <input type="password" id="pass" name="pass" placeholder="Enter your password"><br>
         Email:<br>
-        <input type="text" name="email" placeholder="Enter your email" required><br>
+        <input type="text" name="email" placeholder="Enter your email"><br>
         <input type="submit" name="submit" value="Register">
     </form>
 
     <div id="message">
-        <?php echo $error?>
+        <?php
+        foreach ($errors as $key => $values) {
+            echo '<br>' . $values;
+        }
+        ?>
     </div>
 </body>
 
