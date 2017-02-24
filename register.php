@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 
         $sqlemail = "SELECT * FROM users.users WHERE email = '$email'";
         $result2 = mysqli_query($conn, $sqlemail);
-        $counter = mysqli_num_rows($result);
+        $counter = mysqli_num_rows($result2);
 
         if ($count > 0) {
             $errors[] = "The credentials you have entered have been used already. Please try with another username.";
