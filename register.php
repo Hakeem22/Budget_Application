@@ -19,11 +19,11 @@ if (isset($_POST['submit'])) {
         $password = mysqli_real_escape_string($conn, $_POST['pass']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-        $sql = "SELECT * FROM users.users WHERE username = '$username'";
+        $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = mysqli_query($conn, $sql);
         $count = mysqli_num_rows($result);
 
-        $sqlemail = "SELECT * FROM users.users WHERE email = '$email'";
+        $sqlemail = "SELECT * FROM users WHERE email = '$email'";
         $result2 = mysqli_query($conn, $sqlemail);
         $counter = mysqli_num_rows($result2);
 
@@ -32,10 +32,10 @@ if (isset($_POST['submit'])) {
         } else if ($counter > 0) {
             $errors[] = "The credentials you have entered have been used already. Please try with another email.";
         } else {
-            $insert = "INSERT INTO users.users (Username, Password, EmailAddress) VALUES ('$username', '$password', '$email')";
+            $insert = "INSERT INTO users (username, password, email) VALUES ('$username', '$password', '$email')";
             $_SESSION['login_user'] = $username;
             mysqli_query($conn, $insert);
-            $errors[] = "The credentials have not been used previously therefore your account has been created try to login <a href='index.php'>here</a>";
+            $errors[] = "<center>The credentials have not been used previously therefore your account has been created try to login <a href='index.php'>here</a></center>";
         }
     }
 }
