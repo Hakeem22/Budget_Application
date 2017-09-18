@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once '../includes/dbconfig.php';
-include_once 'message.php';
+include '../includes/dbconfig.php';
+include 'message.php';
 
 if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -15,10 +15,10 @@ if (isset($_POST['submit'])) {
     if ($count > 0) {
         $encrypt = generateRandomString();
 
-        $sql = "UPDATE users SET forgot_password=? WHERE username=?";
+        $sqls = "UPDATE users SET forgot_password=? WHERE username=?";
 
-        $t = $conn->prepare($sql);
-        $t->bind_param('si', $encrypt, $username);
+        $t = $conn->prepare($sqls);
+        $t->bind_param('ss', $encrypt, $username);
         $t->execute();
 
         $username = ucfirst($username);
@@ -41,6 +41,7 @@ function generateRandomString($length = 10) {
 
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <title>Insethium Account Recovery</title>
 </head>
 

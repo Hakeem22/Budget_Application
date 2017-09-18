@@ -2,7 +2,7 @@
 include ('./includes/dbconfig.php');
 session_start();
 
-$errors = array();
+$errors = "";
 
 if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     if ($count > 0) {
         $_SESSION['login_user'] = $username;
     } else {
-        $errors = array("The information you have inserted is incorrect.", "Did you know the password and username is case-sensitive.", "If it still does not work feel free to use the forgotten password feature nearby login.");
+        $errors = "The credentials inserted are not correct, please try again.";
     }
 
 }
@@ -30,29 +30,34 @@ if (isset($_POST['submit'])) {
 
 <body>
 
-<div id="login_box">
-    <form action="#" method="post">
-        <?php
-        if (!isset($_SESSION['login_user'])) {
-            ?>
-            <label>Username:</label><br>
-            <input type="text" name="username" id="username"><br>
-            <label>Password:</label><br>
-            <input type="password" name="password" id="password"><br>
-            <input type="submit" name="submit" value="Login">
-            <input type="submit" name="passwordreset" value="Forgotten Password" onclick="window.open('./forgot.php')"><br><br>
+<div id="container">
+
+    <div id="login_box">
+        <center><form action="#" method="post">
             <?php
-            foreach($errors as $key => $errors) {
-                echo "Login failed: " . $errors . "<br>";
+            if (!isset($_SESSION['login_user'])) {
+                ?>
+                <label>Username:</label><br>
+                <input type="text" name="username" id="username"><br>
+                <label>Password:</label><br>
+                <input type="password" name="password" id="password"><br>
+                <input type="submit" name="submit" value="Login">
+                <input type="submit" name="passwordreset" value="Forgotten Password" onclick="window.open('./recovery')"><br><br>
+                <?php
+                echo $errors;
+            } else {
+                ?>
+                <h1>Heading</h1>
+                <p class="test">Welcome back <b> <?php echo ucfirst($_SESSION['login_user'])  ?></b>, we have been waiting for your return.</p>
+                <input type="search"><br>
+                <input type="submit" value="Submit">
+                <?php
             }
-        } else {
             ?>
-            <h1>Heading</h1>
-            <p class="test">Welcome back to the website <?php echo $_SESSION['login_user']; ?>, we have been waiting for your return.</p>
-            <?php
-        }
-        ?>
-    </form>
+            </form></center>
+
+    </div>
+
 </div>
 
 </body>

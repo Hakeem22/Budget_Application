@@ -1,5 +1,5 @@
 <?php
-include_once '../includes/dbconfig.php';
+include '../includes/dbconfig.php';
 include_once 'message.php';
 
 if (isset($_POST['submit'])) {
@@ -14,18 +14,18 @@ if (isset($_POST['submit'])) {
 
     if ($count > 0) {
 
-        $sql = "UPDATE users SET forgot_password=? WHERE username=?";
+        $sql = "UPDATE users SET forgot_password=?, password=? WHERE username=?";
 
         $empty = "";
+        $newpass = "tes321t";
         $t = $conn->prepare($sql);
-        $t->bind_param('si', $empty, $username);
+        $t->bind_param('sss', $empty, $newpass, $username);
         $t->execute();
 
         $username = ucfirst($username);
 
         $obj = new message();
-        $obj->sendMail($email, "contact@insethium.com", "Insethium: Forgott Password", "Hi $username, <br><br>Everything has been processed through successfully, I would like to inform you that you will receive your new account password within the next 48 hours. <br> If you have any issues feel free to contact a staff member on our forums: www.insethium.com/forums  <br/> <br/>--<br>insethium.com<br>Insethium Account Recovery Support");
-        $obj->sendMail("hakeems1996@gmail.com", "sigma@insethium.com", "Password Approveed" . $username, "Hi Sigma, <br><br>Can we process a password reset for the following username: $username the associated email address to the user is: $email <br><br> This user has successfully went through the forgotten password feature.  <br/> <br/>--<br>insethium.com<br>Insethium Account Recovery Support");
+        $obj->sendMail($email, "sigma@insethium.com", "Password Reset" . $username, "Hi $username, <br><br> Your brand new password that has been generated is: $newpass <br/> <br/>--<br>insethium.com<br>Insethium Account Recovery Support");
 
         echo "<center>Please read your emails in regards to your forgotten password. Please allow up to 48 hour for the email to arrive.</center><br>";
     } else {
@@ -38,6 +38,7 @@ if (isset($_POST['submit'])) {
 
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <title>Insethium Account Recovery</title>
 </head>
 

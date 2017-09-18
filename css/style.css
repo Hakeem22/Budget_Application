@@ -1,16 +1,3 @@
 body {
-    background-color: darkslateblue;
-}
-p {
-    font-family: Calibri;
-}
-#login_box {
-    display: block;
-    text-align: center;
-}
-form {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
+    background-color: darkred;
 }
