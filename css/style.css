@@ -1,3 +1,6 @@
 body {
     background-color: darkred;
 }
+#myUL li {
+    list-style-type: none;
+}
