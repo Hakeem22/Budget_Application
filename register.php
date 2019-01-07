@@ -1,5 +1,6 @@
 <?php
 include("./includes/dbconfig.php");
+
 session_start();
 
 $errors = array();
@@ -33,9 +34,8 @@ if (isset($_POST['submit'])) {
             $errors[] = "The credentials you have entered have been used already. Please try with another email.";
         } else {
             $insert = "INSERT INTO users (username, password, email) VALUES ('$username', '$password', '$email')";
-            $_SESSION['login_user'] = $username;
             mysqli_query($conn, $insert);
-            $errors[] = "<center>The credentials have not been used previously therefore your account has been created try to login <a href='index.php'>here</a></center>";
+            $errors[] = "Your account has been successfully created please click <a href='index.php'>here</a> to login.";
         }
     }
 }
@@ -47,20 +47,67 @@ mysqli_close($conn);
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Registration Page</title>
 </head>
 
 <body>
-<div id="login_box">
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href='#'>Customer Login</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.php">Home</a></li>
+
+            <li><a href="contact.php">Contact</a></li>
+
+            <?php
+
+            if (isset($_SESSION['login_user'])) {?>
+
+                <li><a href="logout.php">Sign Out</a></li>
+
+                <?php
+            } else { ?>
+
+                <li><a href="login.php">Sign In</a></li>
+                <li class="active"><a href="register.php">Sign up</a></li>
+
+                <?php
+            }
+            ?>
+
+        </ul>
+    </div>
+</nav>
+
+<div id="login_box" align="center">
     <form action="" method="post">
-        Username:<br>
-        <input type="text" id="user" name="user" placeholder="Enter your username"><br>
-        Password:<br>
-        <input type="password" id="pass" name="pass" placeholder="Enter your password"><br>
-        Email:<br>
-        <input type="text" name="email" placeholder="Enter your email"><br>
-        <input type="submit" name="submit" value="Register">
+
+        <div class="form-group">
+            <label for="inlineFormInputGroup">Username:</label>
+            <input type="text" class="form-control"" name="user" style="width: 250px">
+        </div>
+
+        <div class="form-group">
+            <label for="inlineFormInputGroup">Password:</label>
+            <input type="password" class="form-control" name="pass" style="width: 250px">
+        </div>
+
+        <div class="form-group">
+            <label for="inlineFormInputGroup">Email:</label>
+            <input type="text" class="form-control" name="email" style="width: 250px">
+        </div>
+
+        <div class="buttons">
+            <input type="submit" class="btn btn-primary" name="submit" value="Sign up">
+        </div>
     </form>
 
 </div>
@@ -68,7 +115,7 @@ mysqli_close($conn);
 <div id="message">
     <?php
     foreach ($errors as $key => $values) {
-        echo '<br>' . $values;
+        echo '<br><center>' . $values . ' </center>';
     }
     ?>
 </div>

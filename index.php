@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     if ($count > 0) {
         $_SESSION['login_user'] = $username;
     } else {
-        $errors = "The credentials inserted are not correct, please try again.";
+        $errors = "<center>Please check your login credentials as they are invalid.</center>";
     }
 
 }
@@ -38,10 +38,10 @@ if (isset($_POST['submit'])) {
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Customer Login</a>
+                <a class="navbar-brand" href='#'>Customer Login</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="index.php">Home</a></li>
 
                 <li><a href="contact.php">Contact</a></li>
 
@@ -52,7 +52,14 @@ if (isset($_POST['submit'])) {
                 <li><a href="logout.php">Sign Out</a></li>
 
                 <?php
-                }?>
+                } else { ?>
+
+                    <li><a href="login.php">Sign In</a></li>
+                    <li><a href="register.php">Sign up</a></li>
+
+                    <?php
+                }
+                ?>
 
             </ul>
         </div>
@@ -87,19 +94,21 @@ if (isset($_POST['submit'])) {
             echo $errors;
         } else {
         ?>
-        <h1>Heading</h1>
-        <p class="test">Welcome back <b> <?php echo ucfirst($_SESSION['login_user'])  ?></b>, we have been waiting for your return. Please use the search bar below.</p>
+
+        <div class="main_screen_content" align="center">
+            <p class="test">Welcome back <b> <?php echo ucfirst($_SESSION['login_user'])  ?></b>, we have been waiting for your return. Please use the search bar below.</p>
 
 
-        <input type="text" id="myInput" onkeyup="myFunction()" title="Type in a name">
+            <input type="text" id="myInput" onkeyup="myFunction()" title="Type in a name">
 
-        <ul id="myUL">
-            <li><a href="#">Test</a></li>
-            <li><a href="#">123</a></li>
-            <li><a href="#">Hakeem</a></li>
-            <?php
-            }
-            ?>
+            <ul id="myUL">
+                <li><a href="#">Test</a></li>
+                <li><a href="#">123</a></li>
+                <li><a href="#">Hakeem</a></li>
+                <?php
+                }
+                ?>
+        </div>
     </form>
 
 
