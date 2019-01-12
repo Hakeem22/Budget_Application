@@ -20,6 +20,11 @@ if (isset($_POST['submit'])) {
         $password = mysqli_real_escape_string($conn, $_POST['pass']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
 
+        $salt1 = "qm8h*";
+        $salt2 = "pg!@";
+
+        $hash = hash("ripemd128", "$salt1$password$salt2");
+
         $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = mysqli_query($conn, $sql);
         $count = mysqli_num_rows($result);
@@ -33,7 +38,7 @@ if (isset($_POST['submit'])) {
         } else if ($counter > 0) {
             $errors[] = "The credentials you have entered have been used already. Please try with another email.";
         } else {
-            $insert = "INSERT INTO users (username, password, email) VALUES ('$username', '$password', '$email')";
+            $insert = "INSERT INTO users (username, password, email) VALUES ('$username', '$hash', '$email')";
             mysqli_query($conn, $insert);
             $errors[] = "Your account has been successfully created please click <a href='index.php'>here</a> to login.";
         }
@@ -60,7 +65,7 @@ mysqli_close($conn);
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href='#'>Customer Login</a>
+            <a class="navbar-brand" href='./index.php'>Customer Login</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="index.php">Home</a></li>
