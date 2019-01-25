@@ -19,10 +19,23 @@ if (isset($_POST['submit'])) {
 
     if ($count > 0) {
         $_SESSION['login_user'] = $username;
+        if (isset($_POST['rememberMe'])) {
+            $year = time() + 31536000;
+            setcookie('rememberMeCookie', $username, $year);
+        } else {
+            $past = time() - 3600;
+            setcookie('rememberMeCookie', "", $past);
+        }
     } else {
         $errors = "<center>Please check your login credentials as they are invalid.</center>";
     }
 
+}
+
+if (isset($_COOKIE['rememberMeCookie'])) {
+    echo 'the cookie still exists.';
+} else {
+    echo 'the cookie still exists.1';
 }
 
 ?>
@@ -77,7 +90,7 @@ if (isset($_POST['submit'])) {
 
             <div class="form-group" align="center">
                 <label for="inlineFormInputGroup">Username:</label>
-                <input type="text" class="form-control"" name="username" id="username" style="width: 250px">
+                <input type="text" class="form-control" name="username" id="username" style="width: 250px" value="<?php echo isset($_COOKIE['rememberMeCookie']) ? $_COOKIE['rememberMeCookie'] : ""; ?>">
             </div>
 
             <div class="form-group" align="center">
@@ -86,7 +99,7 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="form-check" align="center">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <input type="checkbox" class="form-check-input" name="rememberMe" <?php echo isset($_COOKIE['rememberMeCookie']) ? 'checked=checked' : ""; ?>>
                 <label class="form-check-label" for="exampleCheck1">Remember Me</label>
             </div>
 
