@@ -68,7 +68,7 @@ session_start();
         </div>
         <div class="form-group" align="center">
             <label for="formGroupExampleInput">What can we help you with?</label>
-            <<textarea class="form-control" type="textarea"  name="ctext" id="message" placeholder="Enter Your Message" style="width: 500px; height: 100px;"></textarea>
+            <textarea class="form-control" type="textarea"  name="ctext" id="message" placeholder="Enter Your Message" style="width: 500px; height: 100px;"></textarea>
         </div>
         <center><button type="submit" class="btn btn-primary">Submit</button></center>
     </form>

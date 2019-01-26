@@ -1,6 +1,6 @@
 <?php
 include '../includes/dbconfig.php';
-include_once 'message.php';
+include_once '../classes/emailhandler.php';
 
 if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 
         $username = ucfirst($username);
 
-        $obj = new message();
+        $obj = new emailhandler();
         $obj->sendMail($email, "sigma@insethium.com", "Password Reset" . $username, "Hi $username, <br><br> Your brand new password that has been generated is: $newpass <br/> <br/>--<br>insethium.com<br>Insethium Account Recovery Support");
 
         echo "<center>Please read your emails in regards to your forgotten password. Please allow up to 48 hour for the email to arrive.</center><br>";

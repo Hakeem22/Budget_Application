@@ -1,44 +1,9 @@
 <?php
-include ('./includes/dbconfig.php');
+
 session_start();
 
-$errors = "";
-
-if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-
-    $salt1 = "qm8h*";
-    $salt2 = "pg!@";
-
-    $hash = hash("ripemd128", "$salt1$password$salt2");
-
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password='$hash'";
-    $result = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($result);
-
-    if ($count > 0) {
-        $_SESSION['login_user'] = $username;
-        if (isset($_POST['rememberMe'])) {
-            $year = time() + 31536000;
-            setcookie('rememberMeCookie', $username, $year);
-        } else {
-            $past = time() - 3600;
-            setcookie('rememberMeCookie', "", $past);
-        }
-    } else {
-        $errors = "<center>Please check your login credentials as they are invalid.</center>";
-    }
-
-}
-
-if (isset($_COOKIE['rememberMeCookie'])) {
-    echo 'the cookie still exists.';
-} else {
-    echo 'the cookie still exists.1';
-}
-
 ?>
+
 <html>
 
 <head>
@@ -51,106 +16,35 @@ if (isset($_COOKIE['rememberMeCookie'])) {
 
 <body>
 
-<div id="container">
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href='./index.php'>Customer Login</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Home</a></li>
-
-                <li><a href="contact.php">Contact</a></li>
-
-                <?php
-
-                if (isset($_SESSION['login_user'])) {?>
-
-                    <li><a href="logout.php">Sign Out</a></li>
-
-                    <?php
-                } else { ?>
-
-                    <li><a href="login.php">Sign In</a></li>
-                    <li><a href="register.php">Sign up</a></li>
-
-                    <?php
-                }
-                ?>
-
-            </ul>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href='./index.php'>Customer Login</a>
         </div>
-    </nav>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="index.php">Home</a></li>
 
-    <form action="#" method="post">
-        <?php
-        if (!isset($_SESSION['login_user'])) {
-            ?>
-
-            <div class="form-group" align="center">
-                <label for="inlineFormInputGroup">Username:</label>
-                <input type="text" class="form-control" name="username" id="username" style="width: 250px" value="<?php echo isset($_COOKIE['rememberMeCookie']) ? $_COOKIE['rememberMeCookie'] : ""; ?>">
-            </div>
-
-            <div class="form-group" align="center">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" name="password" id="password" style="width: 250px">
-            </div>
-
-            <div class="form-check" align="center">
-                <input type="checkbox" class="form-check-input" name="rememberMe" <?php echo isset($_COOKIE['rememberMeCookie']) ? 'checked=checked' : ""; ?>>
-                <label class="form-check-label" for="exampleCheck1">Remember Me</label>
-            </div>
-
-            <div class="buttons" align="center">
-                <input type="submit" class="btn btn-primary" name="submit" value="Login">
-                <input type="submit" class="btn btn-primary" name="passwordreset" value="Forgotten Password" onclick="window.open('./recovery')"><br><br>
-            </div>
+            <li><a href="contact.php">Contact</a></li>
 
             <?php
-            echo $errors;
-        } else {
-        ?>
 
-        <div class="main_screen_content" align="center">
-            <p class="test">Welcome back <b> <?php echo ucfirst($_SESSION['login_user'])  ?></b>, we have been waiting for your return. Please use the search bar below.</p>
+            if (isset($_SESSION['login_user'])) {?>
 
+                <li><a href="logout.php">Sign Out</a></li>
 
-            <input type="text" id="myInput" onkeyup="myFunction()" title="Type in a name">
-
-            <ul id="myUL">
-                <li><a href="#">Test</a></li>
-                <li><a href="#">123</a></li>
-                <li><a href="#">Hakeem</a></li>
                 <?php
-                }
-                ?>
-        </div>
-    </form>
+            } else { ?>
 
+                <li><a href="login.php">Sign In</a></li>
+                <li><a href="register.php">Sign up</a></li>
 
-</div>
-
-
-<script>
-    function myFunction() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        ul = document.getElementById("myUL");
-        li = ul.getElementsByTagName("li");
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
-            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
-            } else {
-                li[i].style.display = "none";
-
+                <?php
             }
-        }
-    }
-</script>
+            ?>
+
+        </ul>
+    </div>
+</nav>
 
 </body>
 

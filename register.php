@@ -76,7 +76,7 @@ mysqli_close($conn);
 
             if (isset($_SESSION['login_user'])) {?>
 
-                <li><a href="logout.php">Sign Out</a></li>
+                <?php header( 'Location: http://localhost/Registration_site/index.php' ) ; ?>
 
                 <?php
             } else { ?>
@@ -106,7 +106,7 @@ mysqli_close($conn);
         </div>
 
         <div class="form-group">
-            <label for="inlineFormInputGroup">Email:</label>
+            <label for="inlineFormInputGroup">Email Address:</label>
             <input type="text" class="form-control" name="email" style="width: 250px">
         </div>
 
