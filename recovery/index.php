@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
 
         $sqls = "UPDATE users SET forgot_password=? WHERE username=?";
 
+        $message = '';
         $t = $conn->prepare($sqls);
         $t->bind_param('ss', $encrypt, $username);
         $t->execute();
@@ -26,9 +27,9 @@ if (isset($_POST['submit'])) {
         $obj = new emailhandler();
         $obj->sendMail($email, "contact@hakeemsuleman.co.uk", "Forgotten Password", "Hi $username, <br><br>Click the following link if you would like to reset your password: http://hakeemsuleman.co.uk/recovery/reset.php <br><br> Your retrieval code is: $encrypt <br>Please copy the retrieval code as this will be required on the next page.<br><br> Thanks,  <br/> <br>Account Recovery Support");
 
-        echo "<center>Please read your emails in regards to your forgotten password. Please allow upto 1 hour for the email to arrive.</center><br>";
+        $message = 'Please read your emails in regards to your forgotten password request.';
     } else {
-        echo "<center>It seems that the credentials inserted are incorrect. </center><br>";
+        $message = 'The credentials entered does not match what is on our database. Please try again.';
     }
 
 }
@@ -95,6 +96,11 @@ function generateRandomString($length = 10) {
 
         <div class="buttons" align="center">
             <input type="submit" class="btn btn-primary" name="submit" value="Submit">
+        </div>
+
+        <br>
+        <div class="form-group" align="center">
+            <label for="inlineFormInputGroup"><?php echo $message ?></label>
         </div>
 
         <?php
