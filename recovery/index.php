@@ -3,23 +3,27 @@ session_start();
 include '../includes/dbconfig.php';
 include '../classes/emailhandler.php';
 
+$message = '';
+
 if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-    $sql = "SELECT * FROM users WHERE username = '$username' AND email='$email'";
-    $result = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($result);
-    $Results = mysqli_fetch_array($result);
+    $statement = "SELECT * FROM users WHERE username=? AND email=?";
+
+    $p = $conn->prepare($statement);
+    $p->bind_param('ss', $username, $email);
+    $p->execute();
+    $count = $p->get_result()->num_rows;
 
     if ($count > 0) {
+        $statement2 = "UPDATE users SET forgot_password=?, forgotten_date=? WHERE username=?";
+
         $encrypt = generateRandomString();
+        $date = date("Y-m-d H:i:s");
 
-        $sqls = "UPDATE users SET forgot_password=? WHERE username=?";
-
-        $message = '';
-        $t = $conn->prepare($sqls);
-        $t->bind_param('ss', $encrypt, $username);
+        $t = $conn->prepare($statement2);
+        $t->bind_param('sss', $encrypt, $date, $username);
         $t->execute();
 
         $username = ucfirst($username);

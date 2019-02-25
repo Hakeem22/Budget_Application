@@ -3,27 +3,29 @@ include '../includes/dbconfig.php';
 include_once '../classes/emailhandler.php';
 include_once '../classes/passwordEncryption.php';
 
+$message = "";
+
 if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $activation = mysqli_real_escape_string($conn, $_POST['activation']);
 
-    $sql = "SELECT * FROM users WHERE username = '$username' AND email='$email' AND forgot_password='$activation'";
-    $result = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($result);
-    $Results = mysqli_fetch_array($result);
+    $statement = "SELECT * FROM users WHERE username =? AND email=? AND forgot_password=?";
+    $p = $conn->prepare($statement);
+    $p->bind_param('sss', $username, $email, $activation);
+    $p->execute();
+    $count = $p->get_result()->num_rows;
 
     if ($count > 0) {
 
-        $sql = "UPDATE users SET forgot_password=?, password=? WHERE username=?";
+        $statement2 = "UPDATE users SET forgot_password=?, password=? WHERE username=?";
 
         $empty = "";
-        $message = "";
         $pe = new passwordEncryption();
         $password = $_POST['password'];
         $hash = $pe->getPassword($password);
 
-        $t = $conn->prepare($sql);
+        $t = $conn->prepare($statement2);
         $t->bind_param('sss', $empty, $hash, $username);
         $t->execute();
 
