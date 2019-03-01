@@ -10,31 +10,44 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $activation = mysqli_real_escape_string($conn, $_POST['activation']);
 
-    $statement = "SELECT * FROM users WHERE username =? AND email=? AND forgot_password=?";
-    $p = $conn->prepare($statement);
-    $p->bind_param('sss', $username, $email, $activation);
+    $p = $conn->prepare( "SELECT * FROM users WHERE username=? AND email=? AND forgot_password=?");
+    $p->bind_param('sss',$username,$email, $activation);
     $p->execute();
     $count = $p->get_result()->num_rows;
 
     if ($count > 0) {
 
-        $statement2 = "UPDATE users SET forgot_password=?, password=? WHERE username=?";
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        $empty = "";
-        $pe = new passwordEncryption();
-        $password = $_POST['password'];
-        $hash = $pe->getPassword($password);
+        while ($myrow = $result->fetch_assoc()) {
+            $da = strtotime(date("Y-m-d H:i:s"));
+            $dd = strtotime($myrow['forgotten_date']);
+            $results = ($da - $dd) / 60 % 60;
 
-        $t = $conn->prepare($statement2);
-        $t->bind_param('sss', $empty, $hash, $username);
-        $t->execute();
+            if ($results > 59) {
+                $message = "That retrieval code has expired. Please re-submit a new forgotten password request.";
+            }
+        }
 
-        $username = ucfirst($username);
+        if (empty($message)) {
+            $pe = new passwordEncryption();
+            $password = $_POST['password'];
+            $hash = $pe->getPassword($password);
 
-        $obj = new emailhandler();
-        $obj->sendMail($email, "contact@hakeemsuleman.co.uk", "Password Reset" . $username, "Hi $username, <br><br>  Your new password request has been submitted and accepted! <br/> <br/>Thanks,<br>Password Recovery Support");
+            $t = $conn->prepare("UPDATE users SET forgot_password=?, password=? WHERE username=?");
+            $t->bind_param('sss', $empty, $hash, $username);
+            $t->execute();
 
-        $message = 'Your new password submission has been accepted.';
+            $username = ucfirst($username);
+
+            $obj = new emailhandler();
+            $obj->sendMail($email, "contact@hakeemsuleman.co.uk", "Password Reset" . $username, "Hi $username, <br><br>  Your new password request has been submitted and accepted! <br/> <br/>Thanks,<br>Password Recovery Support");
+            $message = 'Your new password submission has been accepted.';
+        }
+
     } else {
         $message = 'Please check the credentials to see if they are correct as they do not match our database.';
     }
