@@ -1,7 +1,7 @@
 <?php
 include '../includes/dbconfig.php';
-include_once '../classes/emailhandler.php';
-include_once '../classes/passwordEncryption.php';
+include_once '../classes/EmailHandler.php';
+include_once '../classes/PasswordEncryption.php';
 
 $message = "";
 
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 
             $username = ucfirst($username);
 
-            $obj = new emailhandler();
+            $obj = new emailHandler();
             $obj->sendMail($email, "contact@hakeemsuleman.co.uk", "Password Reset" . $username, "Hi $username, <br><br>  Your new password request has been submitted and accepted! <br/> <br/>Thanks,<br>Password Recovery Support");
             $message = 'Your new password submission has been accepted.';
         }

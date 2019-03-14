@@ -48,7 +48,7 @@ session_start();
         </div>
     </nav>
 
-    <form method="post" action="classes/emailhandler.php">
+    <form method="post" action="classes/EmailHandler.php">
         <div class="form-group" align="center">
             <label for="formGroupExampleInput">Full Name:</label>
             <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Enter Your Full Name" style="width: 250px">
