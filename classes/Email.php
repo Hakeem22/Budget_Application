@@ -1,6 +1,6 @@
 <?php
 
-class emailHandler {
+class Email {
 
     public function sendContactInfo() {
         $fullName = $_POST['fullName'];

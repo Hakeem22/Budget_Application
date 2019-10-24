@@ -1,6 +1,6 @@
 <?php
 include '../includes/dbconfig.php';
-include_once '../classes/EmailHandler.php';
+include_once '../classes/Email.php';
 include_once '../classes/PasswordEncryption.php';
 
 $message = "";
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 
             $username = ucfirst($username);
 
-            $obj = new emailHandler();
+            $obj = new Email();
             $obj->sendMail($email, "contact@hakeemsuleman.co.uk", "Password Reset" . $username, "Hi $username, <br><br>  Your new password request has been submitted and accepted! <br/> <br/>Thanks,<br>Password Recovery Support");
             $message = 'Your new password submission has been accepted.';
         }
@@ -52,17 +52,6 @@ if (isset($_POST['submit'])) {
         $message = 'Please check the credentials to see if they are correct as they do not match our database.';
     }
 
-}
-
-function getRandomPassword() {
-    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    $pass = array();
-    $alphaLength = strlen($alphabet) - 1;
-    for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
-    }
-    return implode($pass);
 }
 
 ?>
@@ -143,7 +132,7 @@ function getRandomPassword() {
 
         <?php
     } else {
-        header( 'Location: http://localhost/Registration_site/index.php');
+        header( 'Location: index.php');
     }
     ?>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../includes/dbconfig.php';
-include '../classes/EmailHandler.php';
+include '../classes/Email.php';
 
 $message = '';
 
@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 
         $username = ucfirst($username);
 
-        $obj = new emailHandler();
+        $obj = new Email();
         $obj->sendMail($email, "contact@hakeemsuleman.co.uk", "Forgotten Password", "Hi $username, <br><br>Click the following link if you would like to reset your password: http://hakeemsuleman.co.uk/recovery/reset.php <br><br> Your retrieval code is: $encrypt <br>Please copy the retrieval code as this will be required on the next page.<br><br> Thanks,  <br/> <br>Account Recovery Support");
 
         $message = 'Please read your emails in regards to your forgotten password request.';

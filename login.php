@@ -1,4 +1,5 @@
 <?php
+include ('./classes/PasswordEncryption.php');
 include ('./includes/dbconfig.php');
 session_start();
 
@@ -8,10 +9,8 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    $salt1 = "qm8h*";
-    $salt2 = "pg!@";
-
-    $hash = hash("ripemd128", "$salt1$password$salt2");
+    $pe = new PasswordEncryption();
+    $hash = $pe->getPassword($password);
 
     $sql = "SELECT * FROM users WHERE username = '$username' AND password='$hash'";
     $result = mysqli_query($conn, $sql);
@@ -41,6 +40,12 @@ if (isset($_POST['submit'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Homepage</title>
+
+    <script type="text/javascript">
+        function onUse() {
+            window.open('recovery');
+        }
+    </script>
 </head>
 
 <body>
@@ -97,7 +102,7 @@ if (isset($_POST['submit'])) {
 
         <div class="buttons" align="center">
             <input type="submit" class="btn btn-primary" name="submit" value="Login">
-            <input type="submit" class="btn btn-primary" name="passwordreset" value="Forgotten Password" onclick="window.open('./recovery')"><br><br>
+            <input type="submit" class="btn btn-primary" name="passwordreset" value="Forgotten Password" onclick="onUse()"><br><br>
         </div>
 
         <?php
@@ -105,7 +110,7 @@ if (isset($_POST['submit'])) {
     } else {
     ?>
 
-        <?php header( 'Location: http://localhost/Registration_site/index.php' ) ; ?>
+        <?php header( 'Location: index.php' ) ; ?>
 
         <?php
         }

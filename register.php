@@ -1,4 +1,5 @@
 <?php
+include("./classes/PasswordEncryption.php");
 include("./includes/dbconfig.php");
 
 session_start();
@@ -20,10 +21,8 @@ if (isset($_POST['submit'])) {
         $password = mysqli_real_escape_string($conn, $_POST['pass']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-        $salt1 = "qm8h*";
-        $salt2 = "pg!@";
-
-        $hash = hash("ripemd128", "$salt1$password$salt2");
+        $pe = new PasswordEncryption();
+        $hash = $pe->getPassword($password);
 
         $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = mysqli_query($conn, $sql);
