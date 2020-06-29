@@ -66,7 +66,7 @@ include 'header.php';
         </div>
 
         <div class="buttons">
-            <input type="submit" class="btn btn-primary" name="registerButton" value="Sign up">
+            <input type="submit" class="btn" name="registerButton" value="Sign up">
         </div>
     </form>
 

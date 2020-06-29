@@ -43,19 +43,20 @@ include 'header.php';
     </div>
 </nav>
 
-<form action="#" method="post">
-    <?php
-    if (!isset($_SESSION['login_user'])) {
-        ?>
+<?php
+if (!isset($_SESSION['login_user'])) {
+?>
+<div class="login_container" style="height: 300px; width: 300px; margin: 0 auto; border-color: #e0d8d8; border-style: solid;">
 
+    <form action="#" method="post">
+
+        <h1 style="text-align: center">Customer Login</h1>
         <div class="form-group" align="center">
-            <label for="inlineFormInputGroup">Email Address:</label>
-            <input type="text" class="form-control" name="email_address"style="width: 250px" value="<?php echo isset($_COOKIE['rememberMeCookie']) ? $_COOKIE['rememberMeCookie'] : ""; ?>">
+            <input type="text" class="form-control" name="email_address" placeholder="Email Address" style="width: 250px" value="<?php echo isset($_COOKIE['rememberMeCookie']) ? $_COOKIE['rememberMeCookie'] : ""; ?>">
         </div>
 
         <div class="form-group" align="center">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" name="password" style="width: 250px">
+            <input type="password" class="form-control" name="password" placeholder="Password" style="width: 250px">
         </div>
 
         <div class="form-check" align="center">
@@ -64,22 +65,22 @@ include 'header.php';
         </div>
 
         <div class="buttons" align="center">
-            <input type="submit" class="btn" name="loginButton" value="Login">
-            <input type="submit" class="btn" name="passwordreset" value="Forgotten Password" onclick="onUse()"><br><br>
+            <input type="submit" class="btn" name="loginButton" value="SIGN IN" style="width: 250px"><br>
+            <input type="submit" class="btn border-0" name="passwordreset" value="FORGOTTEN PASSWORD?"  style="width: 250px" onclick="onUse()">
         </div>
 
         <?php
         echo $returnMessage;
-    } else {
-    ?>
+        } else {
+            ?>
 
-        <p>You at present have %VARIABLE% tickets opened.</p>
-
-        <?php
+            <?php
         }
         ?>
-    </div>
+</div>
 </form>
+
+</div>
 
 </body>
 
