@@ -1,46 +1,11 @@
 <?php
-include ('./classes/PasswordEncryption.php');
-include ('./includes/dbconfig.php');
-session_start();
-
-$returnMessage = "";
-
-if (isset($_POST['submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-
-    $pe = new PasswordEncryption();
-    $hash = $pe->getPassword($password);
-
-    $sql = "SELECT * FROM users WHERE username = '$username' AND password='$hash'";
-    $result = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($result);
-
-    if ($count > 0) {
-        $_SESSION['login_user'] = $username;
-        if (isset($_POST['rememberMe'])) {
-            $year = time() + 31536000;
-            setcookie('rememberMeCookie', $username, $year);
-        } else {
-            $past = time() - 3600;
-            setcookie('rememberMeCookie', "", $past);
-        }
-    } else {
-        $returnMessage = "<center>Please check your login credentials as they are invalid.</center>";
-    }
-
-}
-
+include 'header.php';
 ?>
+
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Homepage</title>
-
+    <title>Login</title>
     <script type="text/javascript">
         function onUse() {
             window.open('recovery');
@@ -101,7 +66,7 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div class="buttons" align="center">
-            <input type="submit" class="btn btn-primary" name="submit" value="Login">
+            <input type="submit" class="btn btn-primary" name="loginButton" value="Login">
             <input type="submit" class="btn btn-primary" name="passwordreset" value="Forgotten Password" onclick="onUse()"><br><br>
         </div>
 
