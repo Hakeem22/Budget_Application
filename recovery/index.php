@@ -63,18 +63,16 @@ function generateRandomString($length = 10) {
         <ul class="nav navbar-nav">
             <li><a href="../index.php">Home</a></li>
 
-            <li><a href="../contact.php">Contact</a></li>
-
             <?php
 
             if (isset($_SESSION['login_user'])) {?>
 
+                <li><a href="../contact.php">Contact</a></li>
                 <li><a href="../logout.php">Sign Out</a></li>
 
                 <?php
             } else { ?>
 
-                <li class="active"><a href="../login.php">Sign In</a></li>
                 <li><a href="../register.php">Sign up</a></li>
 
                 <?php

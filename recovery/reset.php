@@ -86,7 +86,6 @@ if (isset($_POST['submit'])) {
                 <?php
             } else { ?>
 
-                <li class="active"><a href="../login.php">Sign In</a></li>
                 <li><a href="../register.php">Sign up</a></li>
 
                 <?php
