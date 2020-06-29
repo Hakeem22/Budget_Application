@@ -97,7 +97,7 @@ function generateRandomString($length = 10) {
         </div>
 
         <div class="buttons" align="center">
-            <input type="submit" class="btn btn-primary" name="submit" value="Submit">
+            <input type="submit" class="btn" name="submit" value="Submit">
         </div>
 
         <br>

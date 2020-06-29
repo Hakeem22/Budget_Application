@@ -64,8 +64,8 @@ include 'header.php';
         </div>
 
         <div class="buttons" align="center">
-            <input type="submit" class="btn btn-primary" name="loginButton" value="Login">
-            <input type="submit" class="btn btn-primary" name="passwordreset" value="Forgotten Password" onclick="onUse()"><br><br>
+            <input type="submit" class="btn" name="loginButton" value="Login">
+            <input type="submit" class="btn" name="passwordreset" value="Forgotten Password" onclick="onUse()"><br><br>
         </div>
 
         <?php
