@@ -37,7 +37,7 @@ include 'header.php';
     </div>
 </nav>
 
-<div id="login_box" align="center">
+<div id="login_box" style="text-align: center">
     <form action="" method="post">
 
         <div class="form-group">

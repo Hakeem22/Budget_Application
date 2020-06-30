@@ -28,3 +28,8 @@
 .dl-horizontal p, h1 {
     text-align: center;
 }
+#login_box input[type=text], input[type=password]  {
+    width: 250px;
+    display: block;
+    margin : 0 auto;
+}
