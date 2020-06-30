@@ -42,27 +42,27 @@ include 'header.php';
 
         <div class="form-group">
             <label for="inlineFormInputGroup">First Name:</label>
-            <input type="text" class="form-control" name="fname" style="width: 250px">
+            <input type="text" class="form-control" name="fname">
         </div>
 
         <div class="form-group">
             <label for="inlineFormInputGroup">Second Name:</label>
-            <input type="text" class="form-control" name="sname" style="width: 250px">
+            <input type="text" class="form-control" name="sname">
         </div>
 
         <div class="form-group">
             <label for="inlineFormInputGroup">Email Address:</label>
-            <input type="text" class="form-control" name="email" style="width: 250px">
+            <input type="text" class="form-control" name="email">
         </div>
 
         <div class="form-group">
             <label for="inlineFormInputGroup">Mobile Number:</label>
-            <input type="text" class="form-control" name="mobile" style="width: 250px">
+            <input type="text" class="form-control" name="mobile">
         </div>
 
         <div class="form-group">
             <label for="inlineFormInputGroup">Password:</label>
-            <input type="password" class="form-control" name="pass" style="width: 250px">
+            <input type="password" class="form-control" name="pass">
         </div>
 
         <div class="buttons">

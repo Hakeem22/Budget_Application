@@ -1,3 +1,16 @@
 #myUL li {
     list-style-type: none;
 }
+.login_container {
+    height: 300px;
+    width: 300px;
+    margin: 0 auto;
+    border-color: #e0d8d8;
+    border-style: solid;
+}
+.login_container h1 {
+    text-align: center;
+}
+input[type=text], input[type=password], input[type=submit], input[type=email] {
+    width: 250px;
+}

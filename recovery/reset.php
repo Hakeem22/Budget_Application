@@ -101,23 +101,23 @@ if (isset($_POST['submit'])) {
     <?php if(!isset($_SESSION['login_user'])) { ?>
         <div class="form-group" align="center">
             <label for="inlineFormInputGroup">Username:</label>
-            <input type="text" class="form-control" name="username" style="width: 250px">
+            <input type="text" class="form-control" name="username">
         </div>
 
         <div class="form-group" align="center">
             <label for="inlineFormInputGroup">Email Address:</label>
-            <input type="text" class="form-control" name="email" style="width: 250px">
+            <input type="text" class="form-control" name="email">
         </div>
 
 
         <div class="form-group" align="center">
             <label for="inlineFormInputGroup">Retrieval Code:</label>
-            <input type="text" class="form-control" name="activation" style="width: 250px">
+            <input type="text" class="form-control" name="activation">
         </div>
 
         <div class="form-group" align="center">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" name="password" style="width: 250px">
+            <input type="password" class="form-control" name="password">
         </div>
 
         <div class="buttons" align="center">

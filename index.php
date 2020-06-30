@@ -46,17 +46,17 @@ include 'header.php';
 <?php
 if (!isset($_SESSION['login_user'])) {
 ?>
-<div class="login_container" style="height: 300px; width: 300px; margin: 0 auto; border-color: #e0d8d8; border-style: solid;">
+<div class="login_container">
 
     <form action="#" method="post">
 
-        <h1 style="text-align: center">Customer Login</h1>
+        <h1>Customer Login</h1>
         <div class="form-group" align="center">
-            <input type="text" class="form-control" name="email_address" placeholder="Email Address" style="width: 250px" value="<?php echo isset($_COOKIE['rememberMeCookie']) ? $_COOKIE['rememberMeCookie'] : ""; ?>">
+            <input type="text" class="form-control" name="email_address" placeholder="Email Address" value="<?php echo isset($_COOKIE['rememberMeCookie']) ? $_COOKIE['rememberMeCookie'] : ""; ?>">
         </div>
 
         <div class="form-group" align="center">
-            <input type="password" class="form-control" name="password" placeholder="Password" style="width: 250px">
+            <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
 
         <div class="form-check" align="center">
@@ -65,8 +65,8 @@ if (!isset($_SESSION['login_user'])) {
         </div>
 
         <div class="buttons" align="center">
-            <input type="submit" class="btn" name="loginButton" value="SIGN IN" style="width: 250px"><br>
-            <input type="submit" class="btn border-0" name="passwordreset" value="FORGOTTEN PASSWORD?"  style="width: 250px" onclick="onUse()">
+            <input type="submit" class="btn" name="loginButton" value="SIGN IN"><br>
+            <input type="submit" class="btn border-0" name="passwordreset" value="FORGOTTEN PASSWORD?" onclick="onUse()">
         </div>
 
         <?php
