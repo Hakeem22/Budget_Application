@@ -2,7 +2,7 @@
     list-style-type: none;
 }
 .login_container {
-    height: 300px;
+    height: 310px;
     width: 300px;
     margin: 0 auto;
     border-color: #e0d8d8;
@@ -11,6 +11,20 @@
 .login_container h1 {
     text-align: center;
 }
-input[type=text], input[type=password], input[type=submit], input[type=email] {
+.item_container h1, form {
+     text-align: center;
+}
+.login_container input[type=text], input[type=password], input[type=submit], input[type=email] {
     width: 250px;
+}
+#container input[type=text], input[type=password], input[type=submit], input[type=email] {
+    width: 250px;
+}
+.item_container input[type=text], input[type=number] {
+    width: 250px;
+    text-align: center;
+    display: inline-block;
+}
+.dl-horizontal p, h1 {
+    text-align: center;
 }

@@ -77,6 +77,18 @@ if (isset($_POST['registerButton'])) {
     mysqli_close($conn);
 }
 
+if (isset($_POST['addItem'])) {
+    $itemName = mysqli_real_escape_string($conn, $_POST['itemName']);
+    $itemAmount = mysqli_real_escape_string($conn, $_POST['itemAmount']);
+    $sessionName = $_SESSION['login_user'];
+
+    $stmt = $conn->prepare("INSERT INTO items (email_address, item_name, item_amount) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $sessionName, $itemName, $itemAmount);
+    $stmt->execute();
+    $stmt->close();
+
+}
+
 ?>
 
 <html>

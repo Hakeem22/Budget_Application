@@ -70,18 +70,29 @@ if (!isset($_SESSION['login_user'])) {
             <input type="submit" class="btn" name="loginButton" value="SIGN IN"><br>
             <input type="submit" class="btn border-0" name="passwordreset" value="FORGOTTEN PASSWORD?" onclick="onUse()">
         </div>
+    </form>
 
         <?php
         echo $returnMessage;
         } else {
             ?>
-
+            <h1 class="text-align-custom">Present Values</h1>
+            <dl class="dl-horizontal text-align-custom">
+                <?php
+                $sql =  $conn->prepare("SELECT * FROM items WHERE email_address=?");
+                $sql->bind_param("s", $_SESSION['login_user']);
+                $sql->execute();
+                $result = $sql->get_result();
+                $spent = 0;
+                while ($row = $result->fetch_assoc()) {
+                    $spent += $row['item_amount']; ?>
+                    <p><?php echo $row['item_name'] . ' : ' . $row['item_amount']; ?></p>
+                <?php } ?>
+                <p>MONTH TO DATE: £<?php echo $spent ?></p>
+            </dl>
             <?php
         }
         ?>
-</div>
-</form>
-
 </div>
 
 </body>
