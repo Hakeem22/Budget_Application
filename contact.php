@@ -20,12 +20,14 @@ include 'header.php';
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
 
-                <li class="active"><a href="contact.php">Contact</a></li>
 
                 <?php
 
                 if (isset($_SESSION['login_user'])) {?>
 
+                    <li><a href="budget.php">Budget</a></li>
+                    <li><a href="profile.php">Profile</a></li>
+                    <li class="active"><a href="contact.php">Contact</a></li>
                     <li><a href="logout.php">Sign Out</a></li>
 
                     <?php
