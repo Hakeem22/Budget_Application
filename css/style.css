@@ -11,7 +11,7 @@
 .login_container h1 {
     text-align: center;
 }
-.item_container h1, form {
+.item_container form {
     text-align: center;
     width: 500px;
     margin: 0 auto;
