@@ -12,7 +12,9 @@
     text-align: center;
 }
 .item_container h1, form {
-     text-align: center;
+    text-align: center;
+    width: 500px;
+    margin: 0 auto;
 }
 .login_container input[type=text], input[type=password], input[type=submit], input[type=email] {
     width: 250px;
