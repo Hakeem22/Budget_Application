@@ -76,8 +76,19 @@ if (!isset($_SESSION['login_user'])) {
         echo $returnMessage;
         } else {
             ?>
-            <h1 class="text-align-custom">Present Values</h1>
             <dl class="dl-horizontal text-align-custom">
+
+                <table class="table custom_table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Item Cost</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+
                 <?php
                 $sql =  $conn->prepare("SELECT * FROM items WHERE email_address=?");
                 $sql->bind_param("s", $_SESSION['login_user']);
@@ -85,11 +96,22 @@ if (!isset($_SESSION['login_user'])) {
                 $result = $sql->get_result();
                 $spent = 0;
                 while ($row = $result->fetch_assoc()) {
-                    $spent += $row['item_amount']; ?>
-                    <p><?php echo $row['item_name'] . ' : ' . $row['item_amount']; ?></p>
+                    $spent += $row['item_amount'];
+                    $date = strtotime($row['date']);
+                    $format_date = date('d-m-Y', $date);?>
+                        <tbody>
+                        <tr>
+                            <th scope="row"><?php echo $row['id']; ?></th>
+                            <td><?php echo $row['item_name']; ?></td>
+                            <td>£<?php echo $row['item_amount']; ?></td>
+                            <td><?php echo $format_date ?></td>
+                            <td><a href="index.php">Delete</a></td>
+                        </tr>
+                        </tbody>
                 <?php } ?>
-                <p>MONTH TO DATE: £<?php echo $spent ?></p>
             </dl>
+            </table>
+            <br><p>MONTH TO DATE: £<?php echo $spent ?></p>
             <?php
         }
         ?>

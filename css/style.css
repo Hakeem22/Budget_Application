@@ -35,3 +35,7 @@
     display: block;
     margin : 0 auto;
 }
+.custom_table {
+    width: 800px;
+    margin: 0 auto;
+}

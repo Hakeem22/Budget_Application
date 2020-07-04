@@ -82,7 +82,7 @@ if (isset($_POST['addItem'])) {
     $itemAmount = mysqli_real_escape_string($conn, $_POST['itemAmount']);
     $sessionName = $_SESSION['login_user'];
 
-    $stmt = $conn->prepare("INSERT INTO items (email_address, item_name, item_amount) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO items (email_address, item_name, item_amount, date) VALUES (?, ?, ?, CURRENT_DATE)");
     $stmt->bind_param("sss", $sessionName, $itemName, $itemAmount);
     $stmt->execute();
     $stmt->close();
