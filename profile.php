@@ -8,6 +8,8 @@ include 'header.php';
     <title>Profile</title>
 </head>
 
+<body>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -37,5 +39,20 @@ include 'header.php';
         </ul>
     </div>
 </nav>
+
+<div class="custom_password">
+    <form action="#" method="post">
+        <label>New Password</label>
+        <input type="password" name="password">
+        <label>Re-type Password</label>
+        <input type="password" name="rpassword">
+        <input type="submit" class="btn" value="Change Password" name="profileButton">
+        <body>
+        <p style="text-align: center"><?php echo$response?></p>
+        </body>
+    </form>
+</div>
+
+</body>
 
 </html>

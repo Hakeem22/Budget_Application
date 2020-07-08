@@ -6,6 +6,7 @@ session_start();
 
 $errors = array();
 $returnMessage = "";
+$response = "";
 
 if (isset($_POST['loginButton'])) {
     $email_address = mysqli_real_escape_string($conn, $_POST['email_address']);
@@ -87,6 +88,26 @@ if (isset($_POST['addItem'])) {
     $stmt->execute();
     $stmt->close();
 
+}
+
+if (isset($_POST['profileButton'])) {
+    $pass = mysqli_real_escape_string($conn, $_POST['password']);
+    $rpass = mysqli_real_escape_string($conn, $_POST['rpassword']);
+
+    if ($pass == $rpass) {
+        $stmt2 = $conn->prepare("UPDATE users SET password=? WHERE email_address=?");
+
+        $p = new PasswordEncryption();
+        $e = $p->getPassword($pass);
+
+        $stmt2->bind_param('ss', $e, $_SESSION['login_user']);
+        $stmt2->execute();
+        $stmt2->close();
+        $response = "Your password has been changed!";
+
+    } else {
+        $response = 'The passwords do not match.';
+    }
 }
 
 ?>
