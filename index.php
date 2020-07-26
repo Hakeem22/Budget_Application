@@ -73,7 +73,6 @@ if (!isset($_SESSION['login_user'])) {
     </form>
 
         <?php
-        echo $returnMessage;
         } else {
             ?>
             <dl class="dl-horizontal text-align-custom">
@@ -116,6 +115,9 @@ if (!isset($_SESSION['login_user'])) {
         }
         ?>
 </div>
+<?php
+echo $returnMessage;
+?>
 
 </body>
 
